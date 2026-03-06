@@ -6,19 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Produto extends Model
+class Estoque extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'nome',
-        'descricao',
-        'preco',
+        'id',
         'quantidade',
-        'tamanho',
-        'cor',
-        'material',
-        'categoria',
-        'ativo'
+        'data_entrada',
+        'data_saida',
+        'localizacao',
+        'lote',
+        'validade',
+        'preco_custo',
     ];
 }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confecção - Clientes</title>
+    <title>Confecção - Estoque</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
 
@@ -21,7 +21,6 @@
             position: relative;
         }
 
-        /* Floating bubbles */
         .bubble {
             position: fixed;
             border-radius: 50%;
@@ -74,7 +73,6 @@
             75% { transform: translateY(-40px) translateX(5px) scale(1.02); }
         }
 
-        /* Light flare effects */
         .light-flare {
             position: fixed;
             pointer-events: none;
@@ -99,7 +97,6 @@
             border-radius: 50%;
         }
 
-        /* Header / Navbar */
         header {
             position: relative;
             z-index: 10;
@@ -152,7 +149,6 @@
             transform: translateY(-1px);
         }
 
-        /* Hero Section */
         .hero {
             position: relative;
             z-index: 5;
@@ -175,11 +171,10 @@
             text-shadow: 0 1px 2px rgba(255,255,255,0.6);
         }
 
-        /* Glass container */
         .container {
             position: relative;
             z-index: 5;
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto 60px;
             padding: 0 20px;
         }
@@ -193,15 +188,7 @@
             text-shadow: 0 1px 3px rgba(255,255,255,0.7);
         }
 
-        /* Client cards grid */
-        .clients-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 24px;
-        }
-
-        /* Client card - Skeuomorphic / Frutiger Aero style */
-        .client-card {
+        .orders-table-wrapper {
             background: linear-gradient(160deg, rgba(220,245,255,0.85) 0%, rgba(200,240,220,0.75) 50%, rgba(180,230,210,0.65) 100%);
             border-radius: 24px;
             padding: 28px 26px;
@@ -214,10 +201,9 @@
             backdrop-filter: blur(10px);
             position: relative;
             overflow: hidden;
-            transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        .client-card::before {
+        .orders-table-wrapper::before {
             content: '';
             position: absolute;
             top: -50%;
@@ -228,96 +214,46 @@
             pointer-events: none;
         }
 
-        .client-card::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 40%;
-            background: linear-gradient(0deg, rgba(180,230,210,0.2) 0%, transparent 100%);
-            pointer-events: none;
-            border-radius: 0 0 24px 24px;
-        }
-
-        .client-card:hover {
-            transform: translateY(-6px) scale(1.02);
-            box-shadow:
-                0 16px 48px rgba(80,160,200,0.22),
-                0 4px 12px rgba(80,160,200,0.12),
-                inset 0 2px 0 rgba(255,255,255,0.9),
-                inset 0 -2px 4px rgba(100,180,160,0.1);
-        }
-
-        .client-card .card-icon {
-            width: 52px;
-            height: 52px;
-            border-radius: 16px;
-            background: linear-gradient(145deg, #7ecbf5 0%, #5ab89a 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 18px;
-            box-shadow:
-                0 4px 12px rgba(90,184,154,0.3),
-                inset 0 1px 0 rgba(255,255,255,0.5),
-                inset 0 -1px 2px rgba(50,130,100,0.2);
+        table {
+            width: 100%;
+            border-collapse: collapse;
             position: relative;
             z-index: 1;
         }
 
-        .client-card .card-icon svg {
-            width: 26px;
-            height: 26px;
-            fill: white;
-            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.15));
-        }
-
-        .client-card .info-row {
-            display: flex;
-            align-items: center;
-            margin-bottom: 12px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .client-card .info-row:last-child {
-            margin-bottom: 0;
-        }
-
-        .client-card .info-label {
-            font-size: 12px;
+        th {
+            text-align: left;
+            padding: 16px 12px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.5) 0%, rgba(200,230,220,0.3) 100%);
+            border-bottom: 2px solid rgba(255,255,255,0.6);
+            font-size: 13px;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.8px;
             color: #3a8a6a;
-            min-width: 85px;
             text-shadow: 0 1px 1px rgba(255,255,255,0.5);
         }
 
-        .client-card .info-value {
-            font-size: 15px;
-            font-weight: 700;
+        td {
+            padding: 14px 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.4);
+            font-size: 14px;
             color: #1e5a44;
-            background: linear-gradient(180deg, rgba(255,255,255,0.6) 0%, rgba(220,245,235,0.4) 100%);
-            padding: 6px 14px;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.5);
-            box-shadow:
-                inset 0 1px 0 rgba(255,255,255,0.7),
-                0 1px 3px rgba(80,160,140,0.08);
-            flex: 1;
+            font-weight: 600;
         }
 
-        .divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.7) 30%, rgba(255,255,255,0.7) 70%, transparent 100%);
-            margin: 14px 0;
-            position: relative;
-            z-index: 1;
+        tbody tr {
+            transition: all 0.3s ease;
         }
 
-        /* Glossy button */
+        tbody tr:hover {
+            background: rgba(255,255,255,0.4);
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
         .glossy-btn {
             display: inline-block;
             margin-top: 30px;
@@ -359,7 +295,6 @@
                 inset 0 -2px 4px rgba(40,120,90,0.2);
         }
 
-        /* Footer */
         footer {
             position: relative;
             z-index: 5;
@@ -372,7 +307,6 @@
             font-size: 14px;
         }
 
-        /* Water droplet decoration */
         .droplet {
             position: fixed;
             z-index: 1;
@@ -401,7 +335,6 @@
             50% { transform: translateY(-20px) rotate(5deg); opacity: 0.9; }
         }
 
-        /* Empty state */
         .empty-state {
             text-align: center;
             padding: 60px 20px;
@@ -414,29 +347,25 @@
             .hero h1 { font-size: 28px; }
             header { padding: 14px 20px; flex-direction: column; gap: 12px; }
             header nav a { margin-left: 10px; font-size: 13px; padding: 6px 14px; }
-            .clients-grid { grid-template-columns: 1fr; }
+            .orders-table-wrapper { overflow-x: auto; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Floating bubbles -->
     <div class="bubble"></div>
     <div class="bubble"></div>
     <div class="bubble"></div>
     <div class="bubble"></div>
     <div class="bubble"></div>
 
-    <!-- Light flares -->
     <div class="light-flare light-flare-1"></div>
     <div class="light-flare light-flare-2"></div>
     <div class="light-flare light-flare-3"></div>
 
-    <!-- Water droplets -->
     <div class="droplet droplet-1"></div>
     <div class="droplet droplet-2"></div>
 
-    <!-- Header -->
     <header>
         <div class="logo"><span>✦</span> Confecção <span>Digital</span></div>
         <nav>
@@ -448,59 +377,54 @@
         </nav>
     </header>
 
-    <!-- Hero -->
     <section class="hero">
-        <h1>🌿 Gestão de Clientes</h1>
-        <p>Visualize todos os clientes cadastrados no sistema</p>
+        <h1>📦 Gestão de Estoque</h1>
+        <p>Visualize e gerencie todo o estoque do sistema</p>
     </section>
 
-    <!-- Clients Section -->
     <div class="container">
-        <h2 class="section-title">📋 Clientes Cadastrados</h2>
+        <h2 class="section-title">📋 Itens em Estoque</h2>
 
-        @if(isset($clientes) && count($clientes) > 0)
-            <div class="clients-grid">
-                @foreach ($clientes as $cliente)
-                    <div class="client-card">
-                        <div class="card-icon">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
-                            </svg>
-                        </div>
-
-                        <div class="info-row">
-                            <span class="info-label">Nome</span>
-                            <span class="info-value">{{ $cliente->nome }}</span>
-                        </div>
-
-                        <div class="divider"></div>
-
-                        <div class="info-row">
-                            <span class="info-label">CPF</span>
-                            <span class="info-value">{{ $cliente->cpf }}</span>
-                        </div>
-
-                        <div class="divider"></div>
-
-                        <div class="info-row">
-                            <span class="info-label">Telefone</span>
-                            <span class="info-value">{{ $cliente->telefone }}</span>
-                        </div>
-                    </div>
-                @endforeach
+        @if(isset($estoques) && count($estoques) > 0)
+            <div class="orders-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Lote</th>
+                            <th>Quantidade</th>
+                            <th>Data Entrada</th>
+                            <th>Data Saída</th>
+                            <th>Localização</th>
+                            <th>Validade</th>
+                            <th>Preço Custo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($estoques as $estoque)
+                            <tr>
+                                <td>{{ $estoque->lote }}</td>
+                                <td>{{ $estoque->quantidade }}</td>
+                                <td>{{ $estoque->data_entrada }}</td>
+                                <td>{{ $estoque->data_saida ? $estoque->data_saida : '—' }}</td>
+                                <td>{{ $estoque->localizacao }}</td>
+                                <td>{{ $estoque->validade }}</td>
+                                <td>R$ {{ number_format($estoque->preco_custo, 2, ',', '.') }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         @else
             <div class="empty-state">
-                Nenhum cliente cadastrado ainda. 🌱
+                Nenhum item em estoque. 🌱
             </div>
         @endif
 
         <div style="text-align: center;">
-            <a href="#" class="glossy-btn">✨ Adicionar Novo Cliente</a>
+            <a href="#" class="glossy-btn">✨ Adicionar Novo Item</a>
         </div>
     </div>
 
-    <!-- Footer -->
     <footer>
         <p>© {{ date('Y') }} Confecção Digital — Feito com 💚 e estilo Frutiger Aero</p>
     </footer>

@@ -6,19 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Produto extends Model
+class Fornecedor extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+        'id',
         'nome',
-        'descricao',
-        'preco',
-        'quantidade',
-        'tamanho',
-        'cor',
-        'material',
-        'categoria',
-        'ativo'
+        'email',
+        'telefone',
+        'endereco',
+        'cidade',
+        'estado',
+        'cep',
+        'cnpj',
     ];
 }
