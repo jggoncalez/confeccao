@@ -496,7 +496,7 @@
         @endif
 
         <div style="text-align: center;">
-            <a href="#" class="glossy-btn">✨ Adicionar Novo Cliente</a>
+            <a href="{{ route('clientes.create') }}" class="glossy-btn">✨ Adicionar Novo Cliente</a>
         </div>
     </div>
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confecção - Pedidos</title>
+    <title>Confecção - Estoque</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
 
@@ -254,37 +254,6 @@
             border-bottom: none;
         }
 
-        .status-badge {
-            display: inline-block;
-            padding: 6px 14px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        }
-
-        .status-pendente {
-            background: linear-gradient(180deg, #ffd84d 0%, #ffb84d 100%);
-            color: #6b4800;
-        }
-
-        .status-processando {
-            background: linear-gradient(180deg, #87ceeb 0%, #4a90de 100%);
-            color: #ffffff;
-        }
-
-        .status-pronto {
-            background: linear-gradient(180deg, #90ee90 0%, #4aae8c 100%);
-            color: #ffffff;
-        }
-
-        .status-entregue {
-            background: linear-gradient(180deg, #98d8c8 0%, #5ab89a 100%);
-            color: #ffffff;
-        }
-
         .glossy-btn {
             display: inline-block;
             margin-top: 30px;
@@ -409,41 +378,37 @@
     </header>
 
     <section class="hero">
-        <h1>📦 Gestão de Pedidos</h1>
-        <p>Visualize e gerencie todos os pedidos do sistema</p>
+        <h1>📦 Gestão de Estoque</h1>
+        <p>Visualize e gerencie todo o estoque do sistema</p>
     </section>
 
     <div class="container">
-        <h2 class="section-title">📋 Pedidos Cadastrados</h2>
+        <h2 class="section-title">📋 Itens em Estoque</h2>
 
-        @if(isset($pedidos) && count($pedidos) > 0)
+        @if(isset($estoques) && count($estoques) > 0)
             <div class="orders-table-wrapper">
                 <table>
                     <thead>
                         <tr>
-                            <th>Data Pedido</th>
-                            <th>Cliente</th>
-                            <th>Status</th>
-                            <th>Data Entrega</th>
-                            <th>Valor Total</th>
-                            <th>Endereço</th>
-                            <th>Observações</th>
+                            <th>Lote</th>
+                            <th>Quantidade</th>
+                            <th>Data Entrada</th>
+                            <th>Data Saída</th>
+                            <th>Localização</th>
+                            <th>Validade</th>
+                            <th>Preço Custo</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($pedidos as $pedido)
+                        @foreach ($estoques as $estoque)
                             <tr>
-                                <td>{{ $pedido->data_pedido }}</td>
-                                <td>{{ $pedido->cliente_nome }}</td>
-                                <td>
-                                    <span class="status-badge status-{{ strtolower(str_replace(' ', '-', $pedido->status)) }}">
-                                        {{ $pedido->status }}
-                                    </span>
-                                </td>
-                                <td>{{ $pedido->data_entrega ? $pedido->data_entrega : '—' }}</td>
-                                <td>R$ {{ $pedido->valor_total }}</td>
-                                <td>{{ $pedido->endereco_entrega }}</td>
-                                <td>{{ $pedido->observacoes ?? '—' }}</td>
+                                <td>{{ $estoque->lote }}</td>
+                                <td>{{ $estoque->quantidade }}</td>
+                                <td>{{ $estoque->data_entrada }}</td>
+                                <td>{{ $estoque->data_saida ? $estoque->data_saida : '—' }}</td>
+                                <td>{{ $estoque->localizacao }}</td>
+                                <td>{{ $estoque->validade }}</td>
+                                <td>R$ {{ number_format($estoque->preco_custo, 2, ',', '.') }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -451,12 +416,12 @@
             </div>
         @else
             <div class="empty-state">
-                Nenhum pedido cadastrado ainda. 🌱
+                Nenhum item em estoque. 🌱
             </div>
         @endif
 
         <div style="text-align: center;">
-            <a href="#" class="glossy-btn">✨ Adicionar Novo Pedido</a>
+            <a href="{{ route('funcionario.estoque.create') }}" class="glossy-btn">✨ Adicionar Novo Item</a>
         </div>
     </div>
 

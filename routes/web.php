@@ -14,13 +14,23 @@ Route::get('/', function () {
 
 Route::get('/clientes', [ClienteController::class, 'index'])->name('clientes.index');
 
-Route::get('/funcionario/pedidos', [PedidoController::class, 'pedidos'])->name('funcionario.pedidos');
+Route::get('/funcionario/pedidos', [PedidoController::class, 'index'])->name('funcionario.pedidos.index');
+Route::get('/funcionario/produtos', [ProdutoController::class, 'index'])->name('funcionario.produtos.index');
+Route::get('/funcionario/fornecedor', [FornecedorController::class, 'index'])->name('funcionario.fornecedor.index');
+Route::get('/funcionario/estoque', [EstoqueController::class, 'index'])->name('funcionario.estoque.index');
 
-Route::get('/funcionario/produtos', [ProdutoController::class, 'produtos'])->name('funcionario.produtos');
+Route::get('/clientes/create', [ClienteController::class, 'create']) -> name('clientes.create');
+Route::get('/funcionario/pedidos/create', [PedidoController::class, 'create'])->name('funcionario.pedidos.create');
+Route::get('/funcionario/produtos/create', [ProdutoController::class, 'create'])->name('funcionario.produtos.create');
+Route::get('/funcionario/fornecedor/create', [FornecedorController::class, 'create'])->name('funcionario.fornecedor.create');
+Route::get('/funcionario/estoque/create', [EstoqueController::class, 'create'])->name('funcionario.estoque.create');
+// Route::get('/clientes/edit', [ClienteController::class, 'edit']) -> name('clientes.edit');
 
-Route::get('/funcionario/fornecedor', [FornecedorController::class, 'fornecedores'])->name('funcionario.fornecedor');
-
-Route::get('/funcionario/estoque', [EstoqueController::class, 'estoques'])->name('funcionario.estoque');
+Route::post('/clientes', [ClienteController::class, 'store'])->name('funcionario.clientes.store');
+Route::post('/funcionario/pedidos', [PedidoController::class, 'store'])->name('funcionario.pedidos.store');
+Route::post('/funcionario/produtos', [ProdutoController::class, 'store'])->name('funcionario.produtos.store');
+Route::post('/funcionario/fornecedor', [FornecedorController::class, 'store'])->name('funcionario.fornecedor.store');
+Route::post('/funcionario/estoque', [EstoqueController::class, 'store'])->name('funcionario.estoque.store');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

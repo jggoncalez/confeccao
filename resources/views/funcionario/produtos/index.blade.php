@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confecção - Estoque</title>
+    <title>Confecção - Produtos</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
 
@@ -254,6 +254,27 @@
             border-bottom: none;
         }
 
+        .status-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .status-ativo {
+            background: linear-gradient(180deg, #90ee90 0%, #4aae8c 100%);
+            color: #ffffff;
+        }
+
+        .status-inativo {
+            background: linear-gradient(180deg, #ffb84d 0%, #ff8c4d 100%);
+            color: #ffffff;
+        }
+
         .glossy-btn {
             display: inline-block;
             margin-top: 30px;
@@ -378,37 +399,45 @@
     </header>
 
     <section class="hero">
-        <h1>📦 Gestão de Estoque</h1>
-        <p>Visualize e gerencie todo o estoque do sistema</p>
+        <h1>👕 Catálogo de Produtos</h1>
+        <p>Visualize e gerencie todos os produtos do sistema</p>
     </section>
 
     <div class="container">
-        <h2 class="section-title">📋 Itens em Estoque</h2>
+        <h2 class="section-title">📋 Produtos Cadastrados</h2>
 
-        @if(isset($estoques) && count($estoques) > 0)
+        @if(isset($produtos) && count($produtos) > 0)
             <div class="orders-table-wrapper">
                 <table>
                     <thead>
                         <tr>
-                            <th>Lote</th>
+                            <th>Nome</th>
+                            <th>Descrição</th>
+                            <th>Preço</th>
                             <th>Quantidade</th>
-                            <th>Data Entrada</th>
-                            <th>Data Saída</th>
-                            <th>Localização</th>
-                            <th>Validade</th>
-                            <th>Preço Custo</th>
+                            <th>Tamanho</th>
+                            <th>Cor</th>
+                            <th>Material</th>
+                            <th>Categoria</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($estoques as $estoque)
+                        @foreach ($produtos as $produto)
                             <tr>
-                                <td>{{ $estoque->lote }}</td>
-                                <td>{{ $estoque->quantidade }}</td>
-                                <td>{{ $estoque->data_entrada }}</td>
-                                <td>{{ $estoque->data_saida ? $estoque->data_saida : '—' }}</td>
-                                <td>{{ $estoque->localizacao }}</td>
-                                <td>{{ $estoque->validade }}</td>
-                                <td>R$ {{ number_format($estoque->preco_custo, 2, ',', '.') }}</td>
+                                <td>{{ $produto->nome }}</td>
+                                <td>{{ $produto->descricao }}</td>
+                                <td>R$ {{ number_format($produto->preco, 2, ',', '.') }}</td>
+                                <td>{{ $produto->quantidade }}</td>
+                                <td>{{ $produto->tamanho }}</td>
+                                <td>{{ $produto->cor }}</td>
+                                <td>{{ $produto->material }}</td>
+                                <td>{{ $produto->categoria }}</td>
+                                <td>
+                                    <span class="status-badge status-{{ $produto->ativo ? 'ativo' : 'inativo' }}">
+                                        {{ $produto->ativo ? 'Ativo' : 'Inativo' }}
+                                    </span>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -416,12 +445,12 @@
             </div>
         @else
             <div class="empty-state">
-                Nenhum item em estoque. 🌱
+                Nenhum produto cadastrado ainda. 🌱
             </div>
         @endif
 
         <div style="text-align: center;">
-            <a href="#" class="glossy-btn">✨ Adicionar Novo Item</a>
+            <a href="{{ route('funcionario.produtos.create') }}" class="glossy-btn">✨ Adicionar Novo Produto</a>
         </div>
     </div>
 

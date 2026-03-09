@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confecção - Produtos</title>
+    <title>Confecção - Fornecedores</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
 
@@ -254,27 +254,6 @@
             border-bottom: none;
         }
 
-        .status-badge {
-            display: inline-block;
-            padding: 6px 14px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        }
-
-        .status-ativo {
-            background: linear-gradient(180deg, #90ee90 0%, #4aae8c 100%);
-            color: #ffffff;
-        }
-
-        .status-inativo {
-            background: linear-gradient(180deg, #ffb84d 0%, #ff8c4d 100%);
-            color: #ffffff;
-        }
-
         .glossy-btn {
             display: inline-block;
             margin-top: 30px;
@@ -328,34 +307,6 @@
             font-size: 14px;
         }
 
-        .droplet {
-            position: fixed;
-            z-index: 1;
-            pointer-events: none;
-        }
-        .droplet-1 {
-            width: 18px; height: 24px;
-            top: 15%; right: 12%;
-            background: radial-gradient(ellipse at 40% 30%, rgba(255,255,255,0.8), rgba(150,210,255,0.3));
-            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-            box-shadow: 0 2px 6px rgba(100,180,220,0.2);
-            animation: dropletFloat 8s ease-in-out infinite;
-        }
-        .droplet-2 {
-            width: 14px; height: 18px;
-            top: 50%; left: 8%;
-            background: radial-gradient(ellipse at 40% 30%, rgba(255,255,255,0.8), rgba(150,230,180,0.3));
-            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-            box-shadow: 0 2px 6px rgba(100,200,160,0.2);
-            animation: dropletFloat 6s ease-in-out infinite;
-            animation-delay: 2s;
-        }
-
-        @keyframes dropletFloat {
-            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
-            50% { transform: translateY(-20px) rotate(5deg); opacity: 0.9; }
-        }
-
         .empty-state {
             text-align: center;
             padding: 60px 20px;
@@ -384,9 +335,6 @@
     <div class="light-flare light-flare-2"></div>
     <div class="light-flare light-flare-3"></div>
 
-    <div class="droplet droplet-1"></div>
-    <div class="droplet droplet-2"></div>
-
     <header>
         <div class="logo"><span>✦</span> Confecção <span>Digital</span></div>
         <nav>
@@ -399,45 +347,39 @@
     </header>
 
     <section class="hero">
-        <h1>👕 Catálogo de Produtos</h1>
-        <p>Visualize e gerencie todos os produtos do sistema</p>
+        <h1>🏢 Gestão de Fornecedores</h1>
+        <p>Visualize e gerencie todos os fornecedores cadastrados</p>
     </section>
 
     <div class="container">
-        <h2 class="section-title">📋 Produtos Cadastrados</h2>
+        <h2 class="section-title">📋 Fornecedores Cadastrados</h2>
 
-        @if(isset($produtos) && count($produtos) > 0)
+        @if(isset($fornecedores) && count($fornecedores) > 0)
             <div class="orders-table-wrapper">
                 <table>
                     <thead>
                         <tr>
                             <th>Nome</th>
-                            <th>Descrição</th>
-                            <th>Preço</th>
-                            <th>Quantidade</th>
-                            <th>Tamanho</th>
-                            <th>Cor</th>
-                            <th>Material</th>
-                            <th>Categoria</th>
-                            <th>Status</th>
+                            <th>Email</th>
+                            <th>Telefone</th>
+                            <th>CNPJ</th>
+                            <th>Endereço</th>
+                            <th>Cidade</th>
+                            <th>Estado</th>
+                            <th>CEP</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($produtos as $produto)
+                        @foreach ($fornecedores as $fornecedor)
                             <tr>
-                                <td>{{ $produto->nome }}</td>
-                                <td>{{ $produto->descricao }}</td>
-                                <td>R$ {{ number_format($produto->preco, 2, ',', '.') }}</td>
-                                <td>{{ $produto->quantidade }}</td>
-                                <td>{{ $produto->tamanho }}</td>
-                                <td>{{ $produto->cor }}</td>
-                                <td>{{ $produto->material }}</td>
-                                <td>{{ $produto->categoria }}</td>
-                                <td>
-                                    <span class="status-badge status-{{ $produto->ativo ? 'ativo' : 'inativo' }}">
-                                        {{ $produto->ativo ? 'Ativo' : 'Inativo' }}
-                                    </span>
-                                </td>
+                                <td>{{ $fornecedor->nome }}</td>
+                                <td>{{ $fornecedor->email }}</td>
+                                <td>{{ $fornecedor->telefone }}</td>
+                                <td>{{ $fornecedor->cnpj }}</td>
+                                <td>{{ $fornecedor->endereco }}</td>
+                                <td>{{ $fornecedor->cidade }}</td>
+                                <td>{{ $fornecedor->estado }}</td>
+                                <td>{{ $fornecedor->cep }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -445,12 +387,12 @@
             </div>
         @else
             <div class="empty-state">
-                Nenhum produto cadastrado ainda. 🌱
+                Nenhum fornecedor cadastrado ainda. 🌱
             </div>
         @endif
 
         <div style="text-align: center;">
-            <a href="#" class="glossy-btn">✨ Adicionar Novo Produto</a>
+            <a href="{{ route('funcionario.fornecedor.create') }}" class="glossy-btn">✨ Adicionar Novo Fornecedor</a>
         </div>
     </div>
 
